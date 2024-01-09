@@ -3,12 +3,22 @@ import Link from "next/link";
 import Logo from "./Logo";
 import Button from "./Button";
 import Signin from "@/app/siginin/signin";
+import SignUp from "@/app/siginin/signup";
 
 const Navbar = ({ toggle }: { toggle: () => void }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isSignupModalOpen, setIsSignupModalOpen] = useState(false);
   const openModal = () => {
     // console.log(' ===== CLICKED ======== ');
     setIsModalOpen(true);
+  }
+
+  const openSignupModal = () => {
+    setIsSignupModalOpen(true);
+  }
+
+  const closeSignupModal = () => {
+    setIsSignupModalOpen(false);
   }
 
   const closeModal = () => {
@@ -55,15 +65,25 @@ const Navbar = ({ toggle }: { toggle: () => void }) => {
                 </Link>
               </li>
             </ul>
-            <div className="hidden md:block">
-              <Button openModal={openModal} />
+            <div style={{ display: 'flex', gap: '8px' }}>
+              <div className="hidden md:block">
+                <Button openModal={openModal} innerText={'Sign In'}/>
+              </div>
+              <div className="hidden md:block">
+                <Button openModal={openSignupModal} innerText={'Sign Up'} />
+              </div>
             </div>
+            
           </div>
         </div>
       </div>
       
       <div style={isModalOpen ? Styles.showen : Styles.hidden}>
         <Signin closeModal={closeModal}/>
+      </div>
+
+      <div style={isSignupModalOpen ? Styles.showen : Styles.hidden}>
+        <SignUp closeModal={closeSignupModal}/>
       </div>
     </>
   );
