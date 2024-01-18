@@ -22,7 +22,7 @@ const SignUp = (props: { closeModal: React.MouseEventHandler<HTMLDivElement> | u
     // Handle form submission logic here
     // console.log('Form submitted:', formData);
     try {
-      const response = await fetch('http://192.168.0.46:4000/v1/users', {
+      const response = await fetch('http://localhost:4000/v1/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
