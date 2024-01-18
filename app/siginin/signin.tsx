@@ -1,10 +1,16 @@
-import React, { useState } from "react";
+import React, { useState , useContext} from "react";
+import { useRouter } from 'next/navigation';
+import {MyContext} from '../components/navigation/navbar'
 
 const Signin = (props: { closeModal: React.MouseEventHandler<HTMLDivElement> | undefined; }) => {
+  const router = useRouter();
+  const { isModalOpen, setIsModalOpen } = useContext(MyContext);
+
   const [formData, setFormData] = useState({
-    username: '',
+    email: '',
     password: '',
   });
+  // const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleChange = (e: { target: { name: any; value: any; }; }) => {
     const { name, value } = e.target;
@@ -14,24 +20,46 @@ const Signin = (props: { closeModal: React.MouseEventHandler<HTMLDivElement> | u
     }));
   };
 
-  const handleSubmit = (e: { preventDefault: () => void; }) => {
+  const handleSubmit = async(e: { preventDefault: () => void; }) => {
     e.preventDefault();
-    // Handle form submission logic here
     console.log('Form submitted:', formData);
+
+    const response = await fetch('http://localhost:4000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response) {
+        console.log('LOGED IN');
+        console.log(response);
+        router.push('/about');
+        setIsModalOpen(false);
+      } else {
+        console.log('ERROR LOGED IN');
+        console.log(response);
+        setIsModalOpen(false);
+      }
   };
+
+  const handleclikck = () => {
+    setIsModalOpen(false);
+  }
 
   return(
     <div>
       <div style={Styles.popupContainer}>
         <div style={Styles.popupContent}>
           <div style={Styles.closebtn} onClick={props.closeModal}>X</div>
-
+          <div onClick={handleclikck}>Close Model</div>
           <div>
             <h1 style={Styles.h1}>Login Form</h1>
             <form onSubmit={handleSubmit} style={Styles.formStyle}>
               <div style={Styles.fieldContainer}>
                 <label style={Styles.inputLabel}>
-                  <input style={Styles.inputStyle} type="text" name="username" value={formData.username} onChange={handleChange} />
+                  <input style={Styles.inputStyle} type="text" name="email" value={formData.email} onChange={handleChange} />
                 </label>
               </div>
               <div style={Styles.fieldContainer}>

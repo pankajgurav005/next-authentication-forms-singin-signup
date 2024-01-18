@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import Link from "next/link";
 import Logo from "./Logo";
 import Button from "./Button";
 import Signin from "@/app/siginin/signin";
 import SignUp from "@/app/siginin/signup";
+
+const MyContext = createContext();
 
 const Navbar = ({ toggle }: { toggle: () => void }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -77,14 +79,15 @@ const Navbar = ({ toggle }: { toggle: () => void }) => {
           </div>
         </div>
       </div>
-      
-      <div style={isModalOpen ? Styles.showen : Styles.hidden}>
-        <Signin closeModal={closeModal}/>
-      </div>
+      <MyContext.Provider value={{ isModalOpen, setIsModalOpen }}>
+        <div style={isModalOpen ? Styles.showen : Styles.hidden}>
+          <Signin closeModal={closeModal}/>
+        </div>
+      </MyContext.Provider>  
 
-      <div style={isSignupModalOpen ? Styles.showen : Styles.hidden}>
-        <SignUp closeModal={closeSignupModal}/>
-      </div>
+        <div style={isSignupModalOpen ? Styles.showen : Styles.hidden}>
+          <SignUp closeModal={closeSignupModal}/>
+        </div>
     </>
   );
 };
@@ -98,4 +101,4 @@ const Styles = {
   }
 }
 
-export default Navbar;
+export {MyContext, Navbar};
