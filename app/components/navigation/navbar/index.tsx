@@ -5,7 +5,8 @@ import Button from "./Button";
 import Signin from "@/app/siginin/signin";
 import SignUp from "@/app/siginin/signup";
 
-const MyContext = createContext();
+const obj = { isModalOpen: Boolean, setIsModalOpen: Function }
+const MyContext = createContext(obj);
 
 const Navbar = ({ toggle }: { toggle: () => void }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);

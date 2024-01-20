@@ -1,6 +1,6 @@
 import React, { useState , useContext} from "react";
 import { useRouter } from 'next/navigation';
-import {MyContext} from '../components/navigation/navbar'
+import { MyContext } from '../components/navigation/navbar'
 
 const Signin = (props: { closeModal: React.MouseEventHandler<HTMLDivElement> | undefined; }) => {
   const router = useRouter();
