@@ -1,22 +1,65 @@
 import React from "react";
+const people = [{
+  id: 0,
+  name: 'Creola Katherine Johnson',
+  profession: 'mathematician',
+  accomplishment: 'spaceflight calculations',
+  imageId: 'MK3eW3A'
+}, {
+  id: 1,
+  name: 'Mario José Molina-Pasquel Henríquez',
+  profession: 'chemist',
+  accomplishment: 'discovery of Arctic ozone hole',
+  imageId: 'mynHUSa'
+}, {
+  id: 2,
+  name: 'Mohammad Abdus Salam',
+  profession: 'physicist',
+  accomplishment: 'electromagnetism theory',
+  imageId: 'bE7W1ji'
+}, {
+  id: 3,
+  name: 'Percy Lavon Julian',
+  profession: 'chemist',
+  accomplishment: 'pioneering cortisone drugs, steroids and birth control pills',
+  imageId: 'IOjWm71'
+}, {
+  id: 4,
+  name: 'Subrahmanyan Chandrasekhar',
+  profession: 'astrophysicist',
+  accomplishment: 'white dwarf star mass calculations',
+  imageId: 'lrWQx8l'
+}];
+
+const getImageUrl = (person1: {
+  id?: number; name?: string; profession?: string;
+  accomplishment?: string; imageId: any;
+}) => {
+  return (
+    'https://i.imgur.com/' +
+    person1.imageId +
+    's.jpg'
+  );
+}
 
 const About = () => {
-  return <><div className="container1">
-  <div>
-    <h1>WE HAVE</h1>
-    <h2>Global Partnership</h2>
-    <p>
-      Our Global parters are spread 12 countries and our client base
-      is growing day by day . Many of my clients are repeat customers
-      and several have come to us through high recommendation and
-      referrals . Our client hail from different domains
-    </p>
-  </div>
-  <img
-    src="https://cdni.iconscout.com/illustration/premium/thumb/business-partnership-2975816-2476892.png"
-    style={{ marginTop: "50px" }}
-    alt="" />
-</div></>
+  const chemists = people.filter(person =>
+    person.profession === 'chemist'
+  );
+  const listItems = chemists.map(person =>
+    <li>
+      <img
+        src={getImageUrl(person)}
+        alt={person.name}
+      />
+      <p>
+        <b>{person.name}:</b>
+        {' ' + person.profession + ' '}
+        known for {person.accomplishment}
+      </p>
+    </li>
+  );
+  return <ul>{listItems}</ul>;
 };
 
 export default About;
